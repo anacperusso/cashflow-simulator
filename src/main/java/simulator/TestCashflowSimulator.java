@@ -1,3 +1,6 @@
+package simulator;
+
+
 public class TestCashflowSimulator {
 
     public static void main(String[] args) {

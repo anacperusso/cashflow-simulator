@@ -1,3 +1,6 @@
+package simulator;
+
+
 public class CashflowSimulator {
 
     private static final int MAX_DAYS = 1000;

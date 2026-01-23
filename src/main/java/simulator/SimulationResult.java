@@ -1,3 +1,6 @@
+package simulator;
+
+
 public class SimulationResult {
 
     private final boolean quebra;
