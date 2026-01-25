@@ -22,41 +22,53 @@ public class CashflowSimulator {
             }
 
             if (caixa <= 0) {
-                return new SimulationResult(
-                        true,
-                        dia,
-                        caixa
-                );
+               SimulationResult result = new SimulationResult(
+        true,
+        dia,
+        caixa
+);
+result.setRiskLevel(RiskLevel.CRITICAL);
+return result;
+
             }
         }
 
-        return new SimulationResult(
-                false,
-                -1,
-                caixa
-        );
+       SimulationResult result = new SimulationResult(
+        false,
+        -1,
+        caixa
+);
+
+if (caixa <= 0) {
+    result.setRiskLevel(RiskLevel.CRITICAL);
+} else if (caixa < caixaAtual * 0.2) {
+    result.setRiskLevel(RiskLevel.WARNING);
+} else {
+    result.setRiskLevel(RiskLevel.SAFE);
+}
+
+return result;
+
     }
 
     // Nova simulação com escala
     public SimulationResult simularEscala(
-            double caixaAtual,
-            double receitaDiaria,
-            double custoDiario,
-            int prazoRecebimento,
-            double percentualEscala
-    ) {
+        double caixaAtual,
+        double receitaDiaria,
+        double custoDiario,
+        int prazoRecebimento,
+        double percentualEscala
+) {
 
-        double receitaEscalada = receitaDiaria * (1 + percentualEscala);
-        double custoEscalado = custoDiario * (1 + percentualEscala);
+    double fatorEscala = 1 + (percentualEscala / 100);
+    double novaReceita = receitaDiaria * fatorEscala;
+    double novoCusto = custoDiario * fatorEscala;
 
-        return simular(
-                caixaAtual,
-                receitaEscalada,
-                custoEscalado,
-                prazoRecebimento
-        );
-    }
+    return simular(
+            caixaAtual,
+            novaReceita,
+            novoCusto,
+            prazoRecebimento
+    );
 }
-
-      
-
+}

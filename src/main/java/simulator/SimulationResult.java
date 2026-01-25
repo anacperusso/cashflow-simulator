@@ -1,27 +1,39 @@
 package simulator;
 
-
 public class SimulationResult {
 
-    private final boolean quebra;
-    private final int diasAteQuebra;
-    private final double caixaFinal;
+    private boolean quebrou;
+    private int diaQuebra;
+    private double caixaFinal;
+    private RiskLevel riskLevel;
 
-    public SimulationResult(boolean quebra, int diasAteQuebra, double caixaFinal) {
-        this.quebra = quebra;
-        this.diasAteQuebra = diasAteQuebra;
+    public SimulationResult(boolean quebrou, int diaQuebra, double caixaFinal) {
+        this.quebrou = quebrou;
+        this.diaQuebra = diaQuebra;
         this.caixaFinal = caixaFinal;
     }
 
-    public boolean isQuebra() {
-        return quebra;
+    // ===== GETTERS =====
+
+    public boolean isQuebrou() {
+        return quebrou;
     }
 
-    public int getDiasAteQuebra() {
-        return diasAteQuebra;
+    public int getDiaQuebra() {
+        return diaQuebra;
     }
 
     public double getCaixaFinal() {
         return caixaFinal;
+    }
+
+    public RiskLevel getRiskLevel() {
+        return riskLevel;
+    }
+
+    // ===== SETTER DE RISCO =====
+
+    public void setRiskLevel(RiskLevel riskLevel) {
+        this.riskLevel = riskLevel;
     }
 }
