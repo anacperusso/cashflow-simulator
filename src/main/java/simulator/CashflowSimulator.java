@@ -1,11 +1,9 @@
 package simulator;
 
-
 public class CashflowSimulator {
 
     private static final int MAX_DAYS = 1000;
 
-    // Simulação base (já existente)
     public SimulationResult simular(
             double caixaAtual,
             double receitaDiaria,
@@ -13,6 +11,7 @@ public class CashflowSimulator {
             int prazoRecebimento
     ) {
         double caixa = caixaAtual;
+        SimulationResult result = null;
 
         for (int dia = 1; dia <= MAX_DAYS; dia++) {
             caixa -= custoDiario;
@@ -22,53 +21,46 @@ public class CashflowSimulator {
             }
 
             if (caixa <= 0) {
-               SimulationResult result = new SimulationResult(
-        true,
-        dia,
-        caixa
-);
-result.setRiskLevel(RiskLevel.CRITICAL);
-return result;
-
+                result = new SimulationResult(
+                        true,
+                        dia,
+                        caixa
+                );
+                break;
             }
         }
 
-       SimulationResult result = new SimulationResult(
-        false,
-        -1,
-        caixa
-);
+        if (result == null) {
+            result = new SimulationResult(
+                    false,
+                    -1,
+                    caixa
+            );
+        }
 
-if (caixa <= 0) {
-    result.setRiskLevel(RiskLevel.CRITICAL);
-} else if (caixa < caixaAtual * 0.2) {
-    result.setRiskLevel(RiskLevel.WARNING);
-} else {
-    result.setRiskLevel(RiskLevel.SAFE);
-}
+        
+        RiskAnalyzer analyzer = new RiskAnalyzer();
+        result.setRiskLevel(analyzer.analyze(result, caixaAtual));
 
-return result;
-
+        return result;
     }
 
-    // Nova simulação com escala
     public SimulationResult simularEscala(
-        double caixaAtual,
-        double receitaDiaria,
-        double custoDiario,
-        int prazoRecebimento,
-        double percentualEscala
-) {
+            double caixaAtual,
+            double receitaDiaria,
+            double custoDiario,
+            int prazoRecebimento,
+            double percentualEscala
+    ) {
+        double fatorEscala = 1 + (percentualEscala / 100);
+        double novaReceita = receitaDiaria * fatorEscala;
+        double novoCusto = custoDiario * fatorEscala;
 
-    double fatorEscala = 1 + (percentualEscala / 100);
-    double novaReceita = receitaDiaria * fatorEscala;
-    double novoCusto = custoDiario * fatorEscala;
-
-    return simular(
-            caixaAtual,
-            novaReceita,
-            novoCusto,
-            prazoRecebimento
-    );
-}
+        return simular(
+                caixaAtual,
+                novaReceita,
+                novoCusto,
+                prazoRecebimento
+        );
+    }
 }
