@@ -1,135 +1,169 @@
-////Cashflow Signal Engine////
+# Cashflow Signal Engine ####
 
-Cash flow simulation and risk signaling engine designed to evaluate financial sustainability, cash burn risk, and business scalability using deterministic daily modeling and explicit business signals.
+#### Deterministic cash flow simulation and risk signaling engine designed to evaluate financial sustainability, cash burn risk, and business scalability using explicit business rules and clean architecture.
 
- PROBLEM CONTEXT
+### Problem Context:
 
- In modern businesses, growth itself has become a financial risk.
+In modern businesses, growth itself has become a financial risk.
 
- High interest rates, delayed receivables, and rising operational costs create a dangerous illusion:
- profit on paper while cash silently collapses.
+High interest rates, delayed receivables, and rising operational costs create a dangerous illusion:
 
- This project addresses a fundamental decision-making question:
+Profit on paper while cash silently collapses.
 
- "Can this business survive its own growth?"
+Most financial tools analyze results.
+This project analyzes survivability.
 
+Core question addressed:
 
+“Can this business survive its own growth?”
 
-  WHAT THIS PROJECT DOES
+## What This Project Does?
 
-  This system simulates daily cash flow behavior and produces a business signal based on financial risk.
+This system simulates daily cash flow behavior and produces an explicit business risk signal.
 
-  It models:
+### It models:
 
-  *Initial cash balance
-  *Daily operational costs
-  *Average daily revenue
-  *Revenue delay (receivables)
-  *Cash depletion dynamics
-  *Risk classification based on outcomes
+Initial cash balance
 
-  The simulation runs day by day until:
-  *Cash breaks (≤ 0), or
-  *A safe simulation horizon is reached
+Daily operational costs
 
-  The final result expresses not just numbers, but business meaning.
+Average daily revenue
 
+Revenue delay (receivables)
 
+Cash depletion dynamics
 
-    CORE CAPABILITIES
+Risk classification based on outcomes
 
-   *Deterministic daily cash flow simulation
-   *Cash break detection
-   *Delay-aware revenue modeling
-   *Final cash balance calculation
+The simulation runs day by day until:
 
-   Explicit financial risk classification:
+Cash breaks (≤ 0), or
 
-        *SAFE
-        *WARNING
-        *CRITICAL
+A safe simulation horizon is reached
 
-   *Clear separation between calculation, orchestration, and execution
+The output is not just numeric — it delivers decision-oriented business meaning.
 
+## Core Capabilities:
 
+Deterministic daily cash flow simulation
 
-     ARCHITECTURAL APPROACH
+Cash break detection
 
-    This project follows Clean Architecture principles:
+Delay-aware revenue modeling
 
-    *Domain Layer
-     Encapsulates business rules and financial logic.
+Final cash balance calculation
 
-    *Use Case Layer
-     Orchestrates intent without embedding calculations.
+Explicit financial risk classification:
 
-    *Execution Layer
-     Runs real scenarios and validates system behavior.
+   - SAFE
 
-    Each layer evolves independently, preserving clarity and testability.
+   - WARNING
 
+   - CRITICAL
 
+Clear separation between calculation, orchestration, and execution
 
-      PROJECT STRUCTURE
+Regression tests to lock core financial behavior
 
-cashflow-signal/
+## Architectural Approach:
+
+This project follows Clean Architecture principles, focusing on clarity, testability, and evolution safety.
+
+Layers:
+
+Domain Layer
+
+Encapsulates business rules and financial logic
+
+(CashflowSimulator, SimulationResult, RiskLevel)
+
+Analysis Layer
+
+Converts raw results into business risk signals
+
+(RiskAnalyzer)
+
+Use Case / Execution Layer
+
+Orchestrates real scenarios and validates behavior
+
+(TestCashflowSimulator, regression tests)
+
+Each layer evolves independently, preventing tight coupling and architectural decay.
+
+🗂 Project Structure
+cashflow-simulator/
 ├── src/
 │   └── main/
 │       └── java/
 │           └── simulator/
-│               ├── CashflowSimulator.java      // Business engine
+│               ├── CashflowSimulator.java      // Cash flow engine
 │               ├── SimulationResult.java       // Domain result
-│               ├── RiskLevel.java               // Risk signaling
-│               ├── SimularFluxoDeCaixa.java     // Use case
-│               └── TestCashflowSimulator.java   // Execution / manual test
+│               ├── RiskAnalyzer.java           // Risk intelligence
+│               ├── RiskLevel.java              // Business signaling
+│               ├── TestCashflowSimulator.java  // Execution / manual test
+│               └── RegressionTest.java         // Behavior lock
+├── docs/
+│   ├── arquitetura.md
+│   ├── modelo-de-negocio.md
+│   └── exemplos-de-uso.md
+├── pom.xml
 ├── .gitignore
-├── README.md
-└── docs/
+├── LICENSE
+└── README.md
 
+### How to Run
+Compile with Maven
+mvn clean compile
 
+Run the simulation
+cd target/classes
+java simulator.TestCashflowSimulator
 
-      HOW TO RUN
+Example Output
+=== RESULTADO DA SIMULACAO ===
+Risco: CRITICAL
+Quebra em 4 dias
+Caixa final: -200.0
 
-      Compile the project:
+### Current Status
 
-       javac src/main/java/simulator/*.java
+✔ Core cash flow engine implemented
 
+✔ Explicit domain result modeling
 
-       RUN THE SIMULATION:
+✔ Risk classification via business signals
 
-       java -cp src/main/java simulator.TestCashflowSimulator
+✔ Clean Architecture separation
 
-       EXEMPLE OUTPUT:
-       
-        Cash breaks in 10 days
-        Final cash balance: -120.0
-        Risk level: CRITICAL
+✔ Regression test protecting core behavior
 
+✔ Maven build configured and validated
 
+## Next Evolution Steps
 
-       CURRENT STATUS
+Multi-scenario simulations
 
-       ✔ Core cash flow engine implemented
-       ✔ Explicit domain result modeling
-       ✔ Risk classification via business signals
-       ✔ Clean Architecture use case separation
-       ✔ Manual execution and validation
+Variable revenue and cost models
 
+Historical cash flow timeline generation
 
+Export results (CSV / JSON)
 
-         NEXT EVOLUTION STEPS
+REST API exposure (Spring Boot)
 
-         *Multi-scenario simulations
-         *Variable revenue and cost models
-         *Historical cash flow timeline generation
-         *Export results to CSV
-         *API exposure (Spring Boot)
-         *Decision-oriented interface or dashboard
+Decision-oriented interface or dashboard
 
-          
-          
-           WHY THIS PROJECT MATTERS
+## Why This Project Matters
 
-           This is not a toy simulator.
+This is not a toy simulator.
 
-           It is a decision-support engine that translates raw financial behavior into actionable business signals — designed with engineering discipline, domain clarity, and architectural intent.
+It is a decision-support engine that translates raw financial behavior into actionable business signals, built with:
+
+Engineering discipline
+
+Domain clarity
+
+Architectural intent
+
+Designed to grow into real-world systems.
