@@ -1,4 +1,4 @@
-package simulator;
+package com.cashflow.domain;
 
 public class RiskAnalyzer {
 
